@@ -46,7 +46,7 @@
     /* ── Colors ── */
     --bg:      #fff;
     --text:    #1a1a1a;
-    --muted:   #888;
+    --muted:   #555;
     --rule:    #e0e0e0;
     --rule-l:  #f0f0f0;
 
@@ -61,7 +61,7 @@
     --red:     #dc2626;
     --red-l:   #fef2f2;
     --gray:    #6b7280;
-    --gray-l:  #f9fafb;
+    --gray-l:  #f3f4f6;
 
     /* ── Radii ── */
     --radius-sm: 3px;
@@ -259,7 +259,7 @@
   .pill.purple { background: var(--purple-l); color: var(--purple); }
   .pill.amber  { background: var(--amber-l);  color: var(--amber); }
   .pill.red    { background: var(--red-l);    color: var(--red); }
-  .pill.gray   { background: var(--gray-l);   color: var(--gray); }
+  .pill.gray   { background: transparent;   color: var(--gray); border: 1px solid var(--gray); }
   .pill.outline { background: transparent; border: 1px dashed; }
 
   /* Tooltip */
@@ -498,7 +498,7 @@
 <body>
 
 <header>
-  <h1>Llama Stack — Responses API Architecture</h1>
+  <h1>Llama Stack Responses API Architecture</h1>
 </header>
 
 <div class="tabs">
@@ -883,6 +883,16 @@
       </div>
     </div>
 
+  </div>
+
+  <div class="legend">
+    <span class="legend-title">Colors</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span> API / Routes</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--green)"></span> Provider</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--purple)"></span> Orchestration</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--gray)"></span> Supporting APIs</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--red)"></span> Safety (optional)</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:var(--amber)"></span> Storage</span>
   </div>
 </div>
 
