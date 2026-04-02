@@ -487,6 +487,141 @@
     line-height: var(--leading-normal);
   }
 
+  /* ══════════════════ VIEW: AGENT SCENARIOS ══════════════════ */
+  .scenarios { max-width: var(--content-xl); }
+  .scenarios-intro {
+    font-size: var(--text-md);
+    color: var(--text);
+    line-height: var(--leading-loose);
+    margin-bottom: var(--sp-8);
+  }
+
+  .scenario {
+    margin-bottom: var(--sp-9);
+  }
+  .scenario-header {
+    margin-bottom: var(--sp-4);
+  }
+  .scenario-title {
+    font-size: var(--text-md);
+    font-weight: var(--weight-semibold);
+    margin-bottom: 2px;
+  }
+  .scenario-subtitle {
+    font-size: var(--text-sm);
+    color: var(--muted);
+    line-height: var(--leading-normal);
+  }
+
+  .scenario-flow {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    position: relative;
+    padding: var(--sp-5) 0;
+    border-top: 1px solid var(--rule-l);
+  }
+
+  .scenario-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 var(--sp-2);
+    position: relative;
+    min-width: 0;
+  }
+
+  .scenario-step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: var(--sp-2);
+    flex-shrink: 0;
+    border: 1.5px solid;
+  }
+  .scenario-step-icon.user    { background: var(--blue-l);   border-color: var(--blue);   color: var(--blue); }
+  .scenario-step-icon.server  { background: var(--purple-l); border-color: var(--purple); color: var(--purple); }
+  .scenario-step-icon.tool    { background: var(--green-l);  border-color: var(--green);  color: var(--green); }
+  .scenario-step-icon.safety  { background: var(--red-l);    border-color: var(--red);    color: var(--red); }
+  .scenario-step-icon.storage { background: var(--amber-l);  border-color: var(--amber);  color: var(--amber); }
+  .scenario-step-icon.result  { background: #fff; border-color: var(--text); color: var(--text); }
+
+  .scenario-step-name {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    margin-bottom: 2px;
+  }
+  .scenario-step-desc {
+    font-size: var(--text-xs);
+    color: var(--muted);
+    line-height: var(--leading-normal);
+  }
+
+  .scenario-connector {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: 24px;
+    margin-top: 18px;
+    color: var(--rule);
+    font-size: var(--text-sm);
+    justify-content: center;
+  }
+  .scenario-connector::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 0;
+    border-top: 1.5px solid var(--rule);
+  }
+
+  .scenario-capabilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-1) var(--sp-2);
+    margin-top: var(--sp-4);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--rule-l);
+  }
+  .scenario-cap-label {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    margin-right: var(--sp-1);
+    line-height: 22px;
+  }
+  .scenario-cap {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    padding: 2px var(--sp-2);
+    border-radius: var(--radius-sm);
+    background: var(--rule-l);
+    color: var(--muted);
+  }
+
+  .scenario-user-story {
+    margin-top: var(--sp-4);
+    padding: var(--sp-4) var(--sp-5);
+    background: var(--blue-l);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    font-size: var(--text-sm);
+    color: var(--text);
+    line-height: var(--leading-normal);
+  }
+  .scenario-user-story em {
+    font-style: italic;
+    color: var(--muted);
+  }
+
   /* ── Print ── */
   @media print {
     body { padding: var(--sp-6); }
@@ -498,14 +633,15 @@
 <body>
 
 <header>
-  <h1>Llama Stack Responses API Architecture</h1>
+  <h1>Llama Stack Responses API</h1>
 </header>
 
 <div class="tabs">
   <div class="tab active" data-view="features">Features</div>
   <div class="tab" data-view="overview">Components</div>
-  <div class="tab" data-view="flow">Control Flow</div>
   <div class="tab" data-view="deps">Dependencies &amp; Storage</div>
+  <div class="tab" data-view="flow">Control Flow</div>
+  <div class="tab" data-view="agent">User Stories</div>
 </div>
 
 <!-- ==================== VIEW 0: FEATURES ==================== -->
@@ -893,6 +1029,241 @@
     <span class="legend-item"><span class="legend-swatch" style="background:var(--gray)"></span> Supporting APIs</span>
     <span class="legend-item"><span class="legend-swatch" style="background:var(--red)"></span> Safety (optional)</span>
     <span class="legend-item"><span class="legend-swatch" style="background:var(--amber)"></span> Storage</span>
+  </div>
+</div>
+
+<!-- ==================== VIEW 4: AGENT + MCP ==================== -->
+<div class="view" id="agent">
+  <div class="scenarios">
+
+    <p class="scenarios-intro">
+      These scenarios illustrate the kinds of agents you can build on the Responses API,
+      and the features each one exercises. Use them to understand the design surface and
+      the problems it was built to solve. For runnable examples, see the
+      <a href="https://github.com/opendatahub-io/agents/tree/main/examples" style="color: var(--blue);">opendatahub-io/agents examples</a>.
+    </p>
+
+    <!-- ─── Scenario 1: Customer Support ─── -->
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-title">Customer support agent</div>
+        <div class="scenario-subtitle">A support agent that resolves customer issues by searching internal docs, looking up account data, and maintaining conversation context across turns.</div>
+      </div>
+
+      <div class="scenario-flow">
+        <div class="scenario-step">
+          <div class="scenario-step-icon user">&#9998;</div>
+          <div class="scenario-step-name">Customer asks</div>
+          <div class="scenario-step-desc">"My invoice from March is wrong — can you check the charges?"</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon tool">&#9906;</div>
+          <div class="scenario-step-name">Search knowledge base</div>
+          <div class="scenario-step-desc"><span class="mono">file_search</span> queries the billing FAQ vector store for refund policy</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon tool">&#9881;</div>
+          <div class="scenario-step-name">Look up account</div>
+          <div class="scenario-step-desc">MCP server queries the billing database for March invoice line items</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon safety">&#9888;</div>
+          <div class="scenario-step-name">Guardrails check</div>
+          <div class="scenario-step-desc">Output shields verify no PII is leaked in the response</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon result">&#10003;</div>
+          <div class="scenario-step-name">Resolution</div>
+          <div class="scenario-step-desc">Agent explains the charges, cites policy, offers to escalate if needed</div>
+        </div>
+      </div>
+
+      <div class="scenario-user-story">
+        <em>The customer follows up two more times.</em> Each follow-up uses <span class="mono">previous_response_id</span> —
+        the agent remembers the invoice, the policy it cited, and the MCP session to the billing DB.
+        No context is lost between turns.
+      </div>
+
+      <div class="scenario-capabilities">
+        <span class="scenario-cap-label">Powered by</span>
+        <span class="scenario-cap">file_search</span>
+        <span class="scenario-cap">MCP connectors</span>
+        <span class="scenario-cap">previous_response_id</span>
+        <span class="scenario-cap">output shields</span>
+        <span class="scenario-cap">SSE streaming</span>
+      </div>
+    </div>
+
+    <!-- ─── Scenario 2: Coding Assistant ─── -->
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-title">Coding assistant</div>
+        <div class="scenario-subtitle">A developer-facing agent that searches documentation, generates code, executes it in a sandbox, and iterates until the tests pass.</div>
+      </div>
+
+      <div class="scenario-flow">
+        <div class="scenario-step">
+          <div class="scenario-step-icon user">&#9998;</div>
+          <div class="scenario-step-name">Developer asks</div>
+          <div class="scenario-step-desc">"Write a function that parses our CSV exports and add tests for edge cases"</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon tool">&#9906;</div>
+          <div class="scenario-step-name">Search docs</div>
+          <div class="scenario-step-desc"><span class="mono">web_search</span> finds the CSV format spec from internal docs</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon server">&#9881;</div>
+          <div class="scenario-step-name">Generate + execute</div>
+          <div class="scenario-step-desc">LLM writes code, MCP code sandbox runs tests — 2 fail</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon server">&#8634;</div>
+          <div class="scenario-step-name">Agent loop iterates</div>
+          <div class="scenario-step-desc">LLM sees failures, fixes the parser, re-runs — all tests pass</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon result">&#10003;</div>
+          <div class="scenario-step-name">Working code</div>
+          <div class="scenario-step-desc">Returns the function, tests, and execution output in a single response</div>
+        </div>
+      </div>
+
+      <div class="scenario-user-story">
+        <em>The developer never sees the retry loop.</em> They sent one request and got back working,
+        tested code. The agentic tool loop handled the iteration automatically — inference, tool call,
+        fix, re-run — up to <span class="mono">max_infer_iters</span>.
+      </div>
+
+      <div class="scenario-capabilities">
+        <span class="scenario-cap-label">Powered by</span>
+        <span class="scenario-cap">web_search</span>
+        <span class="scenario-cap">MCP connectors</span>
+        <span class="scenario-cap">agentic tool loop</span>
+        <span class="scenario-cap">parallel tool calls</span>
+        <span class="scenario-cap">streaming</span>
+      </div>
+    </div>
+
+    <!-- ─── Scenario 3: Research Analyst ─── -->
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-title">Research analyst</div>
+        <div class="scenario-subtitle">An analyst agent that searches the web, queries internal databases, cross-references findings, and produces a grounded summary with citations.</div>
+      </div>
+
+      <div class="scenario-flow">
+        <div class="scenario-step">
+          <div class="scenario-step-icon user">&#9998;</div>
+          <div class="scenario-step-name">Analyst asks</div>
+          <div class="scenario-step-desc">"Compare our Q1 revenue against industry benchmarks and flag anomalies"</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon tool">&#9906;</div>
+          <div class="scenario-step-name">Search benchmarks</div>
+          <div class="scenario-step-desc"><span class="mono">web_search</span> pulls industry reports; <span class="mono">file_search</span> queries internal memos</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon tool">&#9881;</div>
+          <div class="scenario-step-name">Query revenue data</div>
+          <div class="scenario-step-desc">MCP server runs SQL against the data warehouse for Q1 actuals</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon server">&#9998;</div>
+          <div class="scenario-step-name">Synthesize</div>
+          <div class="scenario-step-desc">LLM cross-references sources, identifies gaps, flags two anomalies</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon result">&#10003;</div>
+          <div class="scenario-step-name">Cited report</div>
+          <div class="scenario-step-desc">Summary with source annotations from both web and internal data</div>
+        </div>
+      </div>
+
+      <div class="scenario-user-story">
+        <em>This runs as a background job.</em> The analyst sends <span class="mono">background: true</span> and
+        gets back a response ID immediately. Five minutes later, <span class="mono">GET /v1/responses/{id}</span>
+        returns the completed report — no long-polling, no timeouts.
+      </div>
+
+      <div class="scenario-capabilities">
+        <span class="scenario-cap-label">Powered by</span>
+        <span class="scenario-cap">web_search</span>
+        <span class="scenario-cap">file_search</span>
+        <span class="scenario-cap">MCP connectors</span>
+        <span class="scenario-cap">background execution</span>
+        <span class="scenario-cap">source annotations</span>
+      </div>
+    </div>
+
+    <!-- ─── Scenario 4: Internal Ops ─── -->
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-title">Internal ops automation</div>
+        <div class="scenario-subtitle">An ops agent that coordinates across multiple systems — Slack, Jira, databases — to automate incident response workflows.</div>
+      </div>
+
+      <div class="scenario-flow">
+        <div class="scenario-step">
+          <div class="scenario-step-icon user">&#9998;</div>
+          <div class="scenario-step-name">On-call triggers</div>
+          <div class="scenario-step-desc">"Investigate the spike in error rates on the payments service"</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon tool">&#9881;</div>
+          <div class="scenario-step-name">Query metrics</div>
+          <div class="scenario-step-desc">MCP server pulls error logs and latency data from the observability stack</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon tool">&#9881;</div>
+          <div class="scenario-step-name">Cross-reference</div>
+          <div class="scenario-step-desc">Second MCP server checks recent deploys in CI/CD and open Jira tickets</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon tool">&#9881;</div>
+          <div class="scenario-step-name">Post to Slack</div>
+          <div class="scenario-step-desc">MCP server posts a preliminary incident summary to #incidents</div>
+        </div>
+        <div class="scenario-connector"></div>
+        <div class="scenario-step">
+          <div class="scenario-step-icon result">&#10003;</div>
+          <div class="scenario-step-name">Incident brief</div>
+          <div class="scenario-step-desc">Root cause hypothesis, correlated deploy, Slack thread link, suggested next steps</div>
+        </div>
+      </div>
+
+      <div class="scenario-user-story">
+        <em>Three MCP servers, one request.</em> The agent connects to observability, CI/CD, and Slack
+        through separate MCP tool servers. Sessions are managed by the Responses API — the on-call
+        engineer doesn't configure any of it. They use the same <span class="mono">conversation</span> thread
+        to ask follow-up questions as the incident evolves.
+      </div>
+
+      <div class="scenario-capabilities">
+        <span class="scenario-cap-label">Powered by</span>
+        <span class="scenario-cap">MCP connectors (×3)</span>
+        <span class="scenario-cap">parallel tool calls</span>
+        <span class="scenario-cap">conversations</span>
+        <span class="scenario-cap">pluggable inference</span>
+        <span class="scenario-cap">persistent storage</span>
+      </div>
+    </div>
+
   </div>
 </div>
 
